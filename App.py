@@ -2,7 +2,6 @@ import numpy as np
 import cv2 as cv
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.image import img_to_array
-from collections import Counter
 
 #var de captura da webcan
 vid = cv.VideoCapture(0);
@@ -11,7 +10,7 @@ vid = cv.VideoCapture(0);
 cascade_faces = "resources\\haarcascade_frontalface_default.xml";
 
 #modelo da rede neural já pré treinada
-caminho_modelo = "resources\\modelo_01_expressoes.h5";
+caminho_modelo = "resources\\modelo_06_expressoesVGG.h5";
 
 #usando o classificador para fazer a detecção de faces
 face_detection = cv.CascadeClassifier(cascade_faces);
