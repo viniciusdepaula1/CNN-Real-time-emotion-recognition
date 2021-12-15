@@ -3,9 +3,10 @@ import cv2 as cv
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.image import img_to_array
 
-#var de captura da webcan
-vid = cv.VideoCapture(0);
-  
+#captura da webcan ou video
+vid = cv.VideoCapture('resources\\video_teste06.mp4');
+#vid = cv.VideoCapture(0);
+
 #arquivo específico para trabalhar com detecção de faces
 cascade_faces = "resources\\haarcascade_frontalface_default.xml";
 
@@ -21,6 +22,9 @@ classificador_emocoes = load_model(caminho_modelo, compile= False);
 while(True):
   ret, frame = vid.read()
 
+  if(ret == False):
+    break;
+
   #emocoes em formato de lista para classificacao
   expressoes = ["Raiva", "Nojo", "Medo", "Feliz", "Triste", 
       "Surpreso", "Neutro"];  
@@ -34,18 +38,18 @@ while(True):
 
   if len(faces) > 0:
     for (x, y, w, h) in faces:
-      #extracao do ROI
-      roi = cinza[y:y + h, x:x + w] #coordenadas da face  
-      roi = cv.resize(roi, (48, 48)) #redimensiona imagem
+      
+      regiao_da_face = cinza[y:y + h, x:x + w] #coordenadas da face  
+      regiao_da_face = cv.resize(regiao_da_face, (48, 48)) #redimensiona imagem
 
-      #normalizacao
-      roi = roi.astype('float')
-      roi = roi / 255
-      roi = img_to_array(roi)
-      roi = np.expand_dims(roi, axis = 0)
+      #normalizacao entre 0 e 1
+      regiao_da_face = regiao_da_face.astype('float')
+      regiao_da_face = regiao_da_face / 255
+      regiao_da_face = img_to_array(regiao_da_face)
+      regiao_da_face = np.expand_dims(regiao_da_face, axis = 0) #adiciona mais uma dimensão (1, 48, 48, 1)
 
       #previsoes
-      preds = classificador_emocoes.predict(roi)[0]
+      preds = classificador_emocoes.predict(regiao_da_face)[0]
       emotion_prob = np.max(preds)
       label = expressoes[preds.argmax()]
 
@@ -55,8 +59,8 @@ while(True):
 
       #escrevendo o retangulo na face
       cv.rectangle(frame, (x, y), (x + w, y + h), (0, 0, 255), 2)
-  else:
-    print('Nenhuma face encontrada')
+  #else:
+    #print('Nenhuma face encontrada')
 
   cv.imshow('webcan', frame)
 
