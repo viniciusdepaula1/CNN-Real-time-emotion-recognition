@@ -4,7 +4,7 @@ from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.image import img_to_array
 
 #captura da webcan ou video
-vid = cv.VideoCapture('resources\\video_teste06.mp4');
+vid = cv.VideoCapture('resources\\surveillance_vid01.mp4');
 #vid = cv.VideoCapture(0);
 
 #arquivo específico para trabalhar com detecção de faces

@@ -22,8 +22,9 @@ arquivo_modelo_json = 'resources\\modelo_02_expressoes.json'
 true_y = []  #respostas reais
 pred_y = []  #previsões
 
-x = np.load('resources\\mod_xtest2.npy')     #conjunto de testes
-y = np.load('resources\\mod_ytest2.npy')     #respostas reais
+#conjunto de testes e repostas reais
+x = np.load('resources\\mod_xtest2.npy')     
+y = np.load('resources\\mod_ytest2.npy')     
 
 #print(x[0], y[0])  #imagem 1 e resposta 1
 
